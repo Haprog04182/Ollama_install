@@ -180,7 +180,8 @@
             border-left: 2px solid var(--accent);
             position: relative;
             overflow-x: auto;
-            white-space: nowrap;
+            white-space: pre;
+            max-width: 100%;
         }
 
         .agent-section {
@@ -414,7 +415,7 @@
                             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 2px solid var(--accent-secondary);">
                                 <strong style="display:block; font-size: 0.9rem; color: var(--accent-secondary);">Метод B: PowerShell</strong>
                                 <p style="font-size: 0.8rem; margin: 5px 0 10px 0;">Командная строка для продвинутых пользователей.</p>
-                                <div class="code-box" style="font-size: 0.7rem; padding: 8px;">winget install ollama</div>
+                                <div class="code-box" style="font-size: 0.7rem; padding: 8px;">irm https://ollama.com/install.ps1 | iex</div>
                             </div>
                         </div>
                     </div>
@@ -463,7 +464,7 @@
                                 <div class="code-box" style="margin-top: 15px; margin-bottom: 15px; font-size: 1.1rem; padding: 20px; text-align: center; border: 1px solid var(--accent);">ollama launch pi</div>
                             </li>
                             <li><span>02</span> После загрузки агент будет автоматически подключен к локальному API Ollama.</li>
-                            <li><span>03</span> В настройках Pi Agent (UI) подтвердите Endpoint: <code style="color:var(--accent)">http://localhost:11434</code>.</li>
+                            <li><span>03</span> В настройках Pi Agent (UI) подтвердите Endpoin.</li>
                             <li><span>04</span> Теперь агент имеет прямой доступ к вашим локальным моделям.</li>
                         </ul>
                     </div>
@@ -496,17 +497,23 @@
                 <div class="automation-header">
                     <h2>One-Click Deployment</h2>
                     <p style="color: var(--text-dim);">
-                        Для тех, кто предпочитает автоматизацию. Мы подготовили полноценный PowerShell-скрипт, который берет на себя всю рутину: скачивание, установку и настройку окружения.
+                        Максимальная автоматизация. Скопируйте и выполните эти две команды в PowerShell (от имени администратора).
                     </p>
                 </div>
-                <div class="script-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 30px;">
-                    <a href="https://github.com/Haprog04182/Ollama_install/blob/main/ollama-install.ps1" target="_blank" class="btn-primary" style="padding: 25px 50px; font-size: 1.1rem; animation: pulse 2s infinite;">
-                        Download Script from GitHub
-                    </a>
-                    
-                    <div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 20px; border-radius: 12px; max-width: 700px; text-align: center;">
-                        <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: var(--text-dim);">Для запуска скрипта используйте следующую команду в PowerShell (от имени администратора):</p>
-                        <div class="code-box" style="font-size: 0.85rem; text-align: center; white-space: pre; border-color: var(--accent-secondary);">powershell -ExecutionPolicy Bypass -File .\ollama-install.ps1</div>
+                <div class="script-container" style="display: flex; flex-direction: column; gap: 20px; margin-top: 30px;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent);">01 // DOWNLOAD SCRIPT</span>
+                            <button class="copy-btn" style="position: static; padding: 4px 10px; font-size: 0.7rem;" onclick="copyText('cmd1')">COPY</button>
+                        </div>
+                        <div class="code-box" id="cmd1" style="font-size: 0.9rem; border-color: var(--accent); white-space: pre-wrap; word-break: break-all; overflow-x: auto;">Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Haprog04182/Ollama_install/main/ollama-install.ps1" -OutFile ".\ollama-install.ps1"</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-secondary);">02 // EXECUTE INSTALLATION</span>
+                            <button class="copy-btn" style="position: static; padding: 4px 10px; font-size: 0.7rem;" onclick="copyText('cmd2')">COPY</button>
+                        </div>
+                        <div class="code-box" id="cmd2" style="font-size: 0.9rem; border-color: var(--accent-secondary); white-space: pre-wrap; word-break: break-all; overflow-x: auto;">powershell -ExecutionPolicy Bypass -File .\ollama-install.ps1</div>
                     </div>
                 </div>
             </section>
@@ -518,15 +525,14 @@
     </div>
 
     <script>
-        function copyScript() {
-            const scriptText = document.getElementById('installScript').innerText;
-            navigator.clipboard.writeText(scriptText).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                btn.innerText = 'COPIED!';
-                btn.style.background = '#00ffc3';
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                event.target.innerText = 'COPIED!';
+                event.target.style.background = '#00ffc3';
                 setTimeout(() => {
-                    btn.innerText = 'COPY SCRIPT';
-                    btn.style.background = 'var(--accent)';
+                    event.target.innerText = 'COPY';
+                    event.target.style.background = 'var(--accent)';
                 }, 2000);
             });
         }
