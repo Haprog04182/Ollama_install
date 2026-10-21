@@ -496,34 +496,18 @@
                 <div class="automation-header">
                     <h2>One-Click Deployment</h2>
                     <p style="color: var(--text-dim);">
-                        Для тех, кто предпочитает автоматизацию. Скопируйте этот скрипт и вставьте в PowerShell (от имени администратора). 
-                        Он скачает Ollama, установит её, обновит пути системы и загрузит Llama 3.
-                        чтобы скрипт выполнился, его стоит запускать через камманду <br/>
-                        powershell -ExecutionPolicy Bypass -File .\ollama-install.ps1
+                        Для тех, кто предпочитает автоматизацию. Мы подготовили полноценный PowerShell-скрипт, который берет на себя всю рутину: скачивание, установку и настройку окружения.
                     </p>
                 </div>
-                <div class="script-container">
-                    <button class="copy-btn" onclick="copyScript()">COPY SCRIPT</button>
-                    <div class="script-box" id="installScript"># Ollama Auto-Install Script (Improved)
-$url = "https://ollama.com/download/OllamaSetup.exe"
-$outPath = "$env:TEMP\OllamaSetup.exe"
-
-Write-Host "--> Downloading Ollama..." -ForegroundColor Cyan
-Invoke-WebRequest -Uri $url -OutFile $outPath
-
-Write-Host "--> Installing Ollama..." -ForegroundColor Cyan
-Start-Process -FilePath $outPath -ArgumentList "/S" -Wait
-
-# Update PATH for current session to avoid 'command not found'
-$env:Path += ";$env:LocalAppData\Programs\Ollama"
-
-Write-Host "--> Waiting for service to initialize..." -ForegroundColor Cyan
-Start-Sleep -Seconds 15
-
-Write-Host "--> Initializing Llama3 model..." -ForegroundColor Cyan
-& ollama run llama3 "Hello! Setup complete."
-
-Write-Host "SUCCESS: Ollama is now active!" -ForegroundColor Green</div>
+                <div class="script-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 30px;">
+                    <a href="https://github.com/Haprog04182/Ollama_install/blob/main/ollama-install.ps1" target="_blank" class="btn-primary" style="padding: 25px 50px; font-size: 1.1rem; animation: pulse 2s infinite;">
+                        Download Script from GitHub
+                    </a>
+                    
+                    <div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 20px; border-radius: 12px; max-width: 700px; text-align: center;">
+                        <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: var(--text-dim);">Для запуска скрипта используйте следующую команду в PowerShell (от имени администратора):</p>
+                        <div class="code-box" style="font-size: 0.85rem; text-align: center; white-space: pre; border-color: var(--accent-secondary);">powershell -ExecutionPolicy Bypass -File .\ollama-install.ps1</div>
+                    </div>
                 </div>
             </section>
 
